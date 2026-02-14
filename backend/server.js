@@ -7,11 +7,9 @@ dotenv.config();
 
 const app = express();
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 
-// MongoDB Connection - REMOVED deprecated options
 mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => console.log("✅ MongoDB connected successfully"))
@@ -36,83 +34,76 @@ const projectSchema = new mongoose.Schema({
 const Contact = mongoose.model("Contact", contactSchema);
 const Project = mongoose.model("Project", projectSchema);
 
-// Routes
-app.get("/", (req, res) => {
-  res.send("Qwerty Dream Tech Solution API is running 🚀");
-});
+// --- AUTHENTICATION ROUTES ---
 
-// Contact form
-app.post("/api/contact", async (req, res) => {
-  try {
-    const { name, email, message } = req.body;
-
-    if (!name || !email || !message) {
-      return res.status(400).json({ message: "All fields are required" });
-    }
-
-    const contact = new Contact({ name, email, message });
-    await contact.save();
-
-    res.status(201).json({ message: "Message sent successfully" });
-  } catch (error) {
-    console.error("Contact error:", error);
-    res.status(500).json({ message: "Server error" });
+// Login Route (Missing in your original code)
+app.post("/api/admin/login", (req, res) => {
+  const { password } = req.body;
+  if (password === process.env.ADMIN_PASSWORD) {
+    // In a real app, use JWT. Here we return the password as a simple token.
+    res.json({ success: true, token: password });
+  } else {
+    res.status(401).json({ success: false, message: "Invalid password" });
   }
 });
 
-// Project request
-app.post("/api/project-request", async (req, res) => {
-  try {
-    const { name, company, budget, description } = req.body;
-
-    if (!name || !budget || !description) {
-      return res.status(400).json({ message: "Required fields missing" });
-    }
-
-    const project = new Project({ name, company, budget, description });
-    await project.save();
-
-    res.status(201).json({ message: "Project request submitted successfully" });
-  } catch (error) {
-    console.error("Project request error:", error);
-    res.status(500).json({ message: "Server error" });
-  }
-});
-
-// Admin middleware
+// Updated Admin middleware to check Bearer Token
 const adminAuth = (req, res, next) => {
-  const adminPassword = req.headers["admin-password"];
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1]; // Get token from "Bearer <token>"
 
-  if (!adminPassword || adminPassword !== process.env.ADMIN_PASSWORD) {
+  if (!token || token !== process.env.ADMIN_PASSWORD) {
     return res.status(401).json({ message: "Unauthorized" });
   }
-
   next();
 };
 
-// Admin routes
-app.get("/api/admin/messages", adminAuth, async (req, res) => {
+// --- PUBLIC ROUTES ---
+
+app.post("/api/contact", async (req, res) => {
   try {
-    const messages = await Contact.find().sort({ createdAt: -1 });
-    res.json(messages);
+    const { name, email, message } = req.body;
+    const contact = new Contact({ name, email, message });
+    await contact.save();
+    res.status(201).json({ message: "Message sent successfully" });
   } catch (error) {
-    console.error("Admin messages error:", error);
     res.status(500).json({ message: "Server error" });
   }
+});
+
+app.post("/api/project-request", async (req, res) => {
+  try {
+    const { name, company, budget, description } = req.body;
+    const project = new Project({ name, company, budget, description });
+    await project.save();
+    res.status(201).json({ message: "Project request submitted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+// --- ADMIN ROUTES (Protected) ---
+
+app.get("/api/admin/messages", adminAuth, async (req, res) => {
+  const messages = await Contact.find().sort({ createdAt: -1 });
+  res.json(messages);
 });
 
 app.get("/api/admin/projects", adminAuth, async (req, res) => {
-  try {
-    const projects = await Project.find().sort({ createdAt: -1 });
-    res.json(projects);
-  } catch (error) {
-    console.error("Admin projects error:", error);
-    res.status(500).json({ message: "Server error" });
-  }
+  const projects = await Project.find().sort({ createdAt: -1 });
+  res.json(projects);
+});
+
+// Delete Routes (Added to match your frontend functionality)
+app.delete("/api/admin/messages/:id", adminAuth, async (req, res) => {
+  await Contact.findByIdAndDelete(req.params.id);
+  res.json({ message: "Deleted" });
+});
+
+app.delete("/api/admin/projects/:id", adminAuth, async (req, res) => {
+  await Project.findByIdAndDelete(req.params.id);
+  res.json({ message: "Deleted" });
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`✅ Server running on port ${PORT}`);
-  console.log(`📍 Local: http://localhost:${PORT}`);
-});
+app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
