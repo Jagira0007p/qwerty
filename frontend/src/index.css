@@ -1,0 +1,204 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap");
+@import url("https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&display=swap");
+@import "animate.css";
+@import "splitting/dist/splitting.css";
+@import "splitting/dist/splitting-cells.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-[#0A0A0A] text-[#F5F5F5] font-body antialiased;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display tracking-tight;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-[#1A1A1A];
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-[#404040] rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-[#505050];
+  }
+}
+
+/* Lenis Smooth Scroll */
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Split Text Animation */
+.splitting .char {
+  animation: reveal-char 0.8s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+  animation-delay: calc(0.03s * var(--char-index));
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+@keyframes reveal-char {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Custom Cursor */
+.custom-cursor {
+  @apply fixed w-6 h-6 border border-[#404040] rounded-full pointer-events-none z-[999] 
+         backdrop-blur-sm transition-transform duration-300 ease-out hidden md:block;
+  transform: translate(-50%, -50%);
+}
+
+.custom-cursor-dot {
+  @apply fixed w-1.5 h-1.5 bg-[#F5F5F5] rounded-full pointer-events-none z-[999] hidden md:block;
+  transform: translate(-50%, -50%);
+}
+
+/* Gradient Text */
+.gradient-text {
+  @apply bg-gradient-to-r from-[#F5F5F5] via-[#CCCCCC] to-[#999999] bg-clip-text text-transparent;
+  background-size: 200% auto;
+  animation: text-shine 6s linear infinite;
+}
+
+@keyframes text-shine {
+  to {
+    background-position: 200% center;
+  }
+}
+
+/* Reveal Animations */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Glass Effect */
+.glass {
+  @apply bg-[#111111]/80 backdrop-blur-md border border-[#222222];
+}
+
+/* Image Hover Effects */
+.image-hover {
+  @apply transition-all duration-700 ease-out;
+}
+
+.image-hover:hover {
+  @apply scale-105;
+}
+
+/* Typography */
+.display-large {
+  @apply text-7xl md:text-9xl font-display font-bold tracking-[-0.02em] leading-none;
+}
+
+.display-medium {
+  @apply text-5xl md:text-7xl font-display font-bold tracking-[-0.02em] leading-tight;
+}
+
+.heading-large {
+  @apply text-4xl md:text-5xl font-display font-semibold tracking-tight;
+}
+
+.body-large {
+  @apply text-lg md:text-xl text-[#999999] leading-relaxed;
+}
+
+/* Minimalist Card */
+.minimal-card {
+  @apply bg-[#111111] p-8 rounded-2xl border border-[#222222] 
+         hover:border-[#333333] transition-all duration-500;
+}
+
+/* Loading Animation */
+.loading-dots {
+  @apply flex space-x-2;
+}
+
+.loading-dots div {
+  @apply w-2 h-2 bg-[#333333] rounded-full;
+  animation: loading-dots 1.4s infinite ease-in-out both;
+}
+
+.loading-dots div:nth-child(1) {
+  animation-delay: -0.32s;
+}
+.loading-dots div:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+@keyframes loading-dots {
+  0%,
+  80%,
+  100% {
+    transform: scale(0);
+  }
+  40% {
+    transform: scale(1);
+  }
+}
+
+/* Page Transitions */
+.page-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.page-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 0.6s,
+    transform 0.6s;
+}
+
+.page-exit {
+  opacity: 1;
+}
+
+.page-exit-active {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition:
+    opacity 0.6s,
+    transform 0.6s;
+}
