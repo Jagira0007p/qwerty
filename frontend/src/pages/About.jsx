@@ -3,6 +3,15 @@ import { motion, useInView } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Player } from "@lottiefiles/react-lottie-player";
+import {
+  Rocket,
+  Target,
+  Globe,
+  Lightbulb,
+  Trophy,
+  Sparkles,
+  Users,
+} from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -27,55 +36,79 @@ const About = () => {
 
     // Timeline staggered animations
     timelineRef.current.forEach((item, index) => {
-      gsap.fromTo(
-        item,
-        {
-          x: index % 2 === 0 ? -100 : 100,
-          opacity: 0,
-          rotationY: index % 2 === 0 ? -30 : 30,
-        },
-        {
-          x: 0,
-          opacity: 1,
-          rotationY: 0,
-          duration: 1.5,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: item,
-            start: "top 80%",
-            end: "top 30%",
-            scrub: 1,
+      if (item) {
+        gsap.fromTo(
+          item,
+          {
+            x: index % 2 === 0 ? -100 : 100,
+            opacity: 0,
+            rotationY: index % 2 === 0 ? -30 : 30,
           },
-        },
-      );
+          {
+            x: 0,
+            opacity: 1,
+            rotationY: 0,
+            duration: 1.5,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: item,
+              start: "top 80%",
+              end: "top 30%",
+              scrub: 1,
+            },
+          },
+        );
+      }
     });
+
+    return () => {
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    };
   }, []);
 
   const milestones = [
     {
       year: "2020",
       event: "Company founded with vision to transform tech solutions",
-      icon: "🚀",
+      icon: Rocket,
     },
     {
       year: "2021",
       event: "First 50 clients served successfully",
-      icon: "🎯",
+      icon: Target,
     },
     {
       year: "2022",
       event: "Expanded to international markets",
-      icon: "🌍",
+      icon: Globe,
     },
     {
       year: "2023",
       event: "Launched innovative custom software division",
-      icon: "💡",
+      icon: Lightbulb,
     },
     {
       year: "2024",
       event: "Named Top Tech Solution Provider",
-      icon: "🏆",
+      icon: Trophy,
+    },
+  ];
+
+  const values = [
+    {
+      title: "Innovation",
+      desc: "Pushing boundaries and exploring new possibilities",
+      icon: Lightbulb,
+    },
+    {
+      title: "Excellence",
+      desc: "Delivering nothing less than the best",
+      icon: Sparkles,
+    },
+    {
+      title: "Collaboration",
+      desc: "Working together to achieve great things",
+      icon: Users,
     },
   ];
 
@@ -182,54 +215,59 @@ const About = () => {
             />
 
             <div className="space-y-12">
-              {milestones.map((item, index) => (
-                <div
-                  key={index}
-                  ref={(el) => (timelineRef.current[index] = el)}
-                  className={`relative flex ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"} 
-                             items-center group`}
-                >
-                  {/* Content */}
+              {milestones.map((item, index) => {
+                const IconComponent = item.icon;
+                return (
                   <div
-                    className={`flex-1 ${index % 2 === 0 ? "md:text-right md:pr-16" : "md:text-left md:pl-16"}`}
+                    key={index}
+                    ref={(el) => (timelineRef.current[index] = el)}
+                    className={`relative flex ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"} 
+                               items-center group`}
                   >
-                    <motion.div
-                      whileHover={{ scale: 1.05 }}
-                      className="bg-secondary/80 backdrop-blur-sm p-8 rounded-2xl 
-                                 border border-accent/10 hover:border-accent/30 
-                                 transition-all duration-500 relative overflow-hidden"
+                    {/* Content */}
+                    <div
+                      className={`flex-1 ${index % 2 === 0 ? "md:text-right md:pr-16" : "md:text-left md:pl-16"}`}
                     >
-                      {/* Animated Background */}
-                      <div
-                        className="absolute inset-0 bg-gradient-to-r from-accent/5 to-cool-blue/5 
-                                    opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                      />
-
-                      <div className="relative">
-                        <span className="text-3xl font-bold gradient-text mb-2 block">
-                          {item.year}
-                        </span>
+                      <motion.div
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ duration: 0.3 }}
+                        className="bg-secondary/80 backdrop-blur-sm p-8 rounded-2xl 
+                                   border border-accent/10 hover:border-accent/30 
+                                   transition-all duration-300 relative overflow-hidden cursor-pointer"
+                        style={{ transformOrigin: "center center" }}
+                      >
+                        {/* Animated Background */}
                         <div
-                          className="text-4xl mb-3 transform group-hover:scale-110 
-                                      group-hover:rotate-6 transition-all duration-500"
-                        >
-                          {item.icon}
-                        </div>
-                        <p className="text-text-dark text-lg">{item.event}</p>
-                      </div>
-                    </motion.div>
-                  </div>
+                          className="absolute inset-0 bg-gradient-to-r from-accent/5 to-cool-blue/5 
+                                      opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                        />
 
-                  {/* Timeline Dot */}
-                  <div
-                    className="absolute left-1/2 transform -translate-x-1/2 
-                                w-6 h-6 bg-gradient-to-r from-accent to-cool-blue 
-                                rounded-full border-4 border-primary shadow-lg 
-                                shadow-accent/30 group-hover:scale-150 
-                                transition-all duration-500"
-                  />
-                </div>
-              ))}
+                        <div className="relative">
+                          <span className="text-3xl font-bold gradient-text mb-2 block">
+                            {item.year}
+                          </span>
+                          <div
+                            className="mb-3 transform group-hover:scale-110 
+                                        group-hover:rotate-6 transition-all duration-300 inline-block"
+                          >
+                            <IconComponent size={40} className="text-accent" />
+                          </div>
+                          <p className="text-text-dark text-lg">{item.event}</p>
+                        </div>
+                      </motion.div>
+                    </div>
+
+                    {/* Timeline Dot */}
+                    <div
+                      className="absolute left-1/2 transform -translate-x-1/2 
+                                  w-6 h-6 bg-gradient-to-r from-accent to-cool-blue 
+                                  rounded-full border-4 border-primary shadow-lg 
+                                  shadow-accent/30 group-hover:scale-150 
+                                  transition-all duration-300"
+                    />
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -248,43 +286,34 @@ const About = () => {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Innovation",
-                desc: "Pushing boundaries and exploring new possibilities",
-                icon: "💡",
-              },
-              {
-                title: "Excellence",
-                desc: "Delivering nothing less than the best",
-                icon: "✨",
-              },
-              {
-                title: "Collaboration",
-                desc: "Working together to achieve great things",
-                icon: "🤝",
-              },
-            ].map((value, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                viewport={{ once: true }}
-                className="text-center group"
-              >
-                <div
-                  className="text-6xl mb-4 transform group-hover:scale-110 
-                              group-hover:rotate-12 transition-all duration-500"
+            {values.map((value, index) => {
+              const IconComponent = value.icon;
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.2 }}
+                  viewport={{ once: true }}
+                  className="text-center group"
                 >
-                  {value.icon}
-                </div>
-                <h3 className="text-2xl font-semibold mb-2 text-accent">
-                  {value.title}
-                </h3>
-                <p className="text-text-dark">{value.desc}</p>
-              </motion.div>
-            ))}
+                  <div
+                    className="mb-4 transform group-hover:scale-110 
+                                group-hover:rotate-12 transition-all duration-300 inline-block"
+                  >
+                    <IconComponent
+                      size={64}
+                      className="text-accent"
+                      strokeWidth={1.5}
+                    />
+                  </div>
+                  <h3 className="text-2xl font-semibold mb-2 text-accent">
+                    {value.title}
+                  </h3>
+                  <p className="text-text-dark">{value.desc}</p>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
