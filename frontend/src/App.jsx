@@ -40,7 +40,7 @@ const router = createBrowserRouter([
       { path: "/services", element: <Services /> },
       { path: "/contact", element: <Contact /> },
       { path: "/project-request", element: <ProjectRequest /> },
-      { path: "/admin", element: <AdminDashboard /> },
+      { path: "/prince", element: <AdminDashboard /> },
     ],
   },
 ]);
