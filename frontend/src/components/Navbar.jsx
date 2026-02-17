@@ -68,10 +68,8 @@ const Navbar = () => {
                 transition={{ duration: 0.5 }}
                 className="text-xl md:text-2xl font-display font-bold tracking-tight"
               >
-                <span className="text-text-primary">Q</span>
-                <span className="text-text-tertiary">D</span>
-                <span className="text-text-secondary">T</span>
-                <span className="text-text-tertiary">S</span>
+                <span className="text-text-primary">QWERTY</span>
+                <span className="text-text-tertiary ml-2">Infosys</span>
               </motion.div>
             </Link>
 

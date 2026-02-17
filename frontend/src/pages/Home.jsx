@@ -573,7 +573,7 @@ const Home = () => {
                   >
                     {/* Background Gradient */}
                     <motion.div
-                      className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-0`}
+                      // className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-0`}
                       animate={{ opacity: hoveredIndex === index ? 1 : 0 }}
                       transition={{ duration: 0.3 }}
                     />
@@ -585,7 +585,7 @@ const Home = () => {
                         rotate: hoveredIndex === index ? 360 : 0,
                         scale: hoveredIndex === index ? 1.1 : 1,
                       }}
-                      transition={{ duration: 0.3 }}
+                      transition={{ duration: 1, ease: "easeInOut" }}
                     >
                       <div className="w-12 h-12 rounded-lg bg-[#111] border border-[#333] flex items-center justify-center text-text-primary">
                         {service.icon}
