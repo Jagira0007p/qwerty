@@ -5,7 +5,7 @@ const Footer = () => {
         <div className="grid md:grid-cols-4 gap-12">
           <div className="space-y-4">
             <h3 className="text-xl font-display font-bold tracking-tight">
-              QDTS
+              Qwertyinfosys
             </h3>
             <p className="text-text-tertiary text-sm leading-relaxed">
               Transforming ideas into innovative technology solutions with
@@ -61,8 +61,10 @@ const Footer = () => {
               Contact
             </h4>
             <ul className="space-y-3">
-              <li className="text-text-tertiary text-sm">info@qdts.tech</li>
-              <li className="text-text-tertiary text-sm">+1 (555) 123-4567</li>
+              <li className="text-text-tertiary text-sm">
+                mrgdchauhan@gmail.com
+              </li>
+              <li className="text-text-tertiary text-sm">+91 9328043160</li>
             </ul>
           </div>
         </div>

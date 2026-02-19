@@ -5,7 +5,7 @@ import {
   FiArrowRight,
   FiCode,
   FiSmartphone,
-  FiCloud,
+  FiVideo,
   FiPenTool,
   FiTrendingUp,
   FiServer,
@@ -47,12 +47,7 @@ const Services = () => {
       title: "App Development",
       description:
         "Native and cross-platform mobile applications that deliver exceptional user experiences.",
-      features: [
-        "iOS Development",
-        "Android Development",
-        "React Native",
-        "Flutter",
-      ],
+      features: ["Android Development", "React Native", "Flutter"],
       stats: "30+ Apps",
       color: "from-green-500/20 to-emerald-500/20",
     },
@@ -71,12 +66,17 @@ const Services = () => {
       color: "from-orange-500/20 to-red-500/20",
     },
     {
-      icon: FiCloud,
-      title: "Cloud Solutions",
+      icon: FiVideo, // Changed from FiCloud to FiVideo
+      title: "Video Editing",
       description:
-        "Scalable cloud infrastructure and solutions for modern businesses.",
-      features: ["Cloud Migration", "DevOps", "Infrastructure", "Security"],
-      stats: "99.9% Uptime",
+        "Professional video editing and post-production services for stunning visual content, including color grading, effects, and motion graphics.",
+      features: [
+        "Color Grading",
+        "Motion Graphics",
+        "Visual Effects",
+        "Sound Design",
+      ],
+      stats: "500+ Videos",
       color: "from-purple-500/20 to-pink-500/20",
     },
     {
@@ -130,15 +130,11 @@ const Services = () => {
     "React",
     "Node.js",
     "Python",
-    "AWS",
-    "Docker",
-    "Kubernetes",
     "TypeScript",
-    "GraphQL",
+    "MySQL",
     "MongoDB",
-    "PostgreSQL",
-    "Redis",
-    "TensorFlow",
+    "Java",
+    "Flutter",
   ];
 
   return (
@@ -389,7 +385,7 @@ const Services = () => {
                           rotate: hoveredIndex === index ? 360 : 0,
                           scale: hoveredIndex === index ? 1.1 : 1,
                         }}
-                        transition={{ duration: 0.5 }}
+                        transition={{ duration: 1 }}
                       >
                         <div className="w-14 h-14 rounded-lg bg-[#1A1A1A] border border-[#333] flex items-center justify-center text-text-primary">
                           <IconComponent className="w-7 h-7" />

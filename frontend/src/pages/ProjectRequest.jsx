@@ -47,10 +47,10 @@ const ProjectRequest = () => {
   };
 
   const budgetRanges = [
-    "$5,000 - $10,000",
-    "$10,000 - $25,000",
-    "$25,000 - $50,000",
-    "$50,000+",
+    "5,000 - 10,000",
+    "10,000 - 25,000",
+    "25,000 - 50,000",
+    "50,000+",
   ];
 
   return (
@@ -478,7 +478,7 @@ const ProjectRequest = () => {
                 href="mailto:info@qdts.tech"
                 className="text-text-secondary hover:text-text-primary transition-colors"
               >
-                info@qdts.tech
+                mrgdchauhan@gmail.com
               </a>
             </p>
           </motion.div>

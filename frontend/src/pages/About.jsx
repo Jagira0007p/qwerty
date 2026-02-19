@@ -91,31 +91,31 @@ const About = () => {
 
   const milestones = [
     {
-      year: "2020",
+      year: "2022",
       event: "Company founded with vision to transform tech solutions",
       icon: Rocket,
       color: "from-blue-500/20 to-purple-500/20",
     },
     {
-      year: "2021",
+      year: "2023",
       event: "First 50 clients served successfully",
       icon: Target,
       color: "from-green-500/20 to-emerald-500/20",
     },
     {
-      year: "2022",
+      year: "2024",
       event: "Expanded to international markets",
       icon: Globe,
       color: "from-orange-500/20 to-red-500/20",
     },
     {
-      year: "2023",
+      year: "2025",
       event: "Launched innovative custom software division",
       icon: Lightbulb,
       color: "from-yellow-500/20 to-amber-500/20",
     },
     {
-      year: "2024",
+      year: "2026",
       event: "Named Top Tech Solution Provider",
       icon: Trophy,
       color: "from-purple-500/20 to-pink-500/20",
@@ -162,10 +162,10 @@ const About = () => {
   ];
 
   const team = [
-    { name: "Alex Chen", role: "Founder & CEO", years: "8+ years" },
-    { name: "Sarah Johnson", role: "Lead Developer", years: "6+ years" },
-    { name: "Mike Peters", role: "UX Director", years: "7+ years" },
-    { name: "Emily Davis", role: "Project Manager", years: "5+ years" },
+    { name: "Gautam Chauhan", role: "Founder & CEO", years: "5+ years" },
+    { name: "Prince Vadadoriya", role: "Web Developer", years: "2+ years" },
+    { name: "Rohan   Dabhi", role: "App Developer", years: "3+ years" },
+    // { name: "Emily Davis", role: "Project Manager", years: "5+ years" },
   ];
 
   return (
@@ -344,7 +344,7 @@ const About = () => {
             >
               <HiOutlineSparkles className="w-4 h-4 text-text-secondary" />
               <span className="text-text-secondary text-sm tracking-wider">
-                ABOUT QDTS
+                ABOUT QwertyInfosys
               </span>
             </motion.div>
 
@@ -356,7 +356,7 @@ const About = () => {
             >
               Crafting Digital
               <span className="gradient-text block mt-2 relative">
-                Excellence Since 2020
+                Excellence Since 2022
                 <motion.span
                   className="absolute -top-4 -right-12 text-4xl"
                   animate={{
@@ -715,7 +715,7 @@ const About = () => {
                       animate={{
                         rotate: hoveredIndex === `value-${index}` ? 360 : 0,
                       }}
-                      transition={{ duration: 0.6 }}
+                      transition={{ duration: 1 }}
                     >
                       <IconComponent
                         size={48}

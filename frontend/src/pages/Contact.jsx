@@ -56,19 +56,19 @@ const Contact = () => {
     {
       icon: FiMapPin,
       title: "Visit Us",
-      details: ["123 Tech Street", "Digital City, DC 12345"],
+      details: ["Omkar Chowk", "UNA City, GJ 362560"],
       color: "from-blue-500/20 to-purple-500/20",
     },
     {
       icon: FiMail,
       title: "Email Us",
-      details: ["info@qdts.tech", "support@qdts.tech"],
+      details: ["mrgdchauhan@gmail.com", "We reply within 24 hours"],
       color: "from-green-500/20 to-emerald-500/20",
     },
     {
       icon: FiPhone,
       title: "Call Us",
-      details: ["+1 (555) 123-4567", "Mon-Fri, 9am-6pm"],
+      details: ["+91 9328043160", "Mon-Fri, 9am-5pm"],
       color: "from-orange-500/20 to-red-500/20",
     },
   ];

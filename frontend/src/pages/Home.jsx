@@ -26,6 +26,7 @@ import {
   FiUsers,
   FiAward,
   FiBriefcase,
+  FiVideo,
 } from "react-icons/fi";
 import {
   HiOutlineSparkles,
@@ -124,11 +125,12 @@ const Home = () => {
       stats: "30+ Apps",
     },
     {
-      icon: <FiCloud className="w-6 h-6" />,
-      title: "Cloud Solutions",
-      description: "Scalable cloud infrastructure for modern businesses",
+      icon: <FiVideo className="w-6 h-6" />,
+      title: "Video Editing",
+      description:
+        "Professional video editing and post-production services for stunning visual content",
       color: "from-orange-500/20 to-red-500/20",
-      stats: "99.9% Uptime",
+      stats: "500+ Videos",
     },
     {
       icon: <HiOutlineChip className="w-6 h-6" />,
@@ -350,7 +352,7 @@ const Home = () => {
             >
               <HiOutlineSparkles className="w-4 h-4 text-text-secondary" />
               <span className="text-text-secondary text-sm tracking-wider">
-                QDTS — SINCE 2020
+                QwertyInfosys — SINCE 2022
               </span>
             </motion.div>
           </motion.div>

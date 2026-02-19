@@ -233,3 +233,6 @@ html.lenis {
   background: #f5f5f5;
   transform-origin: left;
 }
+.display-medium {
+  @apply text-5xl md:text-7xl font-display font-bold tracking-tight leading-tight;
+}
