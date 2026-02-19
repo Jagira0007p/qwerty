@@ -5,7 +5,7 @@ const Footer = () => {
         <div className="grid md:grid-cols-4 gap-12">
           <div className="space-y-4">
             <h3 className="text-xl font-display font-bold tracking-tight">
-              Qwertyinfosys
+              QwertyInfosys
             </h3>
             <p className="text-text-tertiary text-sm leading-relaxed">
               Transforming ideas into innovative technology solutions with
@@ -71,7 +71,7 @@ const Footer = () => {
 
         <div className="border-t border-[#222222] mt-16 pt-8 text-center">
           <p className="text-text-tertiary text-sm">
-            © 2024 QDTS. All rights reserved.
+            © 2026 QwertyInfosys. All rights reserved.
           </p>
         </div>
       </div>
