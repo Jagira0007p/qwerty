@@ -101,7 +101,7 @@ const Home = () => {
         pathLength: [0.5, 1, 0.5],
         scale: [1, 1.2, 1],
         rotate: [0, 90, 180, 270, 360],
-        transition: { duration: 8, ease: "easeInOut", repeat: Infinity },
+        transition: { duration: 8, ease: "easeInOut" },
       });
     }, 8000);
 
@@ -357,12 +357,12 @@ const Home = () => {
             </motion.div>
           </motion.div>
 
-          <h1 ref={splitRef} className="display-medium mb-8" data-splitting>
+          <h1 ref={splitRef} className="mb-8" data-splitting>
             <motion.span
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="block"
+              className="block text-5xl md:text-7xl font-display font-bold tracking-tight leading-tight"
             >
               Transform Your
             </motion.span>
@@ -370,11 +370,13 @@ const Home = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
-              className="gradient-text block mt-2 relative"
+              className="block mt-2 relative text-5xl md:text-7xl font-display font-bold tracking-tight leading-tight"
             >
-              Digital Vision
+              <span className="block text-5xl md:text-7xl font-display font-bold tracking-tight leading-tight">
+                Digital Vision
+              </span>
               <motion.span
-                className="absolute -top-4 -right-12 text-4xl"
+                className="absolute -top-4 -right-12 text-4xl text-[#F5F5F5]"
                 animate={{
                   rotate: [0, 10, -10, 0],
                   scale: [1, 1.2, 1],
@@ -391,7 +393,7 @@ const Home = () => {
           </h1>
 
           <motion.div
-            className="body-large mb-10 h-16 flex items-center justify-center gap-2"
+            className="body-large mb-10 h-16 flex items-center justify-center gap-2 flex-wrap"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.7 }}
@@ -459,37 +461,9 @@ const Home = () => {
               </span>
             </motion.a>
           </motion.div>
-
-          {/* Social Proof */}
-          {/* <motion.div
-            className="mt-16 flex items-center justify-center gap-8"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 1.1 }}
-          >
-            <div className="flex -space-x-2">
-              {[1, 2, 3, 4].map((i) => (
-                <motion.div
-                  key={i}
-                  className="w-8 h-8 rounded-full bg-gradient-to-r from-[#333] to-[#444] border-2 border-background"
-                  whileHover={{ scale: 1.2, zIndex: 10 }}
-                />
-              ))}
-            </div>
-            <div className="flex items-center gap-1">
-              <FiStar className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-              <FiStar className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-              <FiStar className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-              <FiStar className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-              <FiStar className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-              <span className="ml-2 text-text-secondary text-sm">
-                4.9 (250+ reviews)
-              </span>
-            </div>
-          </motion.div> */}
         </motion.div>
 
-        {/* Interactive Scroll Indicator */}
+        {/* Scroll Indicator */}
         <motion.div
           className="absolute bottom-10 left-1/2 transform -translate-x-1/2 cursor-pointer"
           animate={{ y: [0, 10, 0] }}
@@ -576,7 +550,7 @@ const Home = () => {
                     {/* Background Gradient */}
                     <motion.div
                       // className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-0`}
-                      animate={{ opacity: hoveredIndex === index ? 1 : 0 }}
+                      // animate={{ opacity: hoveredIndex === index ? 1 : 0 }}
                       transition={{ duration: 0.3 }}
                     />
 
@@ -749,13 +723,13 @@ const Home = () => {
             <span className="gradient-text block mt-2 relative">
               Digital Journey?
               <motion.span
-                className="absolute -top-4 -right-12 text-4xl"
+                className="absolute -top-4 -right-12 text-4xl text-[#F5F5F5]"
                 animate={{
-                  rotate: [0, 20, -20, 0],
-                  scale: [1, 1.3, 1],
+                  rotate: [0, 10, -10, 0],
+                  scale: [1, 1.2, 1],
                 }}
                 transition={{
-                  duration: 3,
+                  duration: 2,
                   repeat: Infinity,
                   ease: "easeInOut",
                 }}

@@ -5,7 +5,7 @@ const ScrollToTop = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    // Check if we're on mobile
+    // Detect if on mobile
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
     // Force immediate scroll to top
@@ -13,33 +13,35 @@ const ScrollToTop = () => {
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0; // For Safari
 
-    // Use a small delay for mobile to ensure DOM is ready
-    if (isMobile) {
-      setTimeout(() => {
-        window.scrollTo({
-          top: 0,
-          left: 0,
-          behavior: "auto",
-        });
-
-        // Double-check with another timeout
-        setTimeout(() => {
-          window.scrollTo(0, 0);
-        }, 100);
-      }, 50);
-    } else {
-      // Smooth scroll for desktop
+    // Use multiple timeouts for mobile to ensure DOM is ready
+    const scrollToTop = () => {
       window.scrollTo({
         top: 0,
         left: 0,
-        behavior: "smooth",
+        behavior: isMobile ? "auto" : "smooth",
       });
-    }
+    };
 
-    // Cleanup timeouts
+    // Immediate scroll
+    scrollToTop();
+
+    // First timeout - after a tiny delay
+    const timeout1 = setTimeout(scrollToTop, 50);
+
+    // Second timeout - after DOM likely updated
+    const timeout2 = setTimeout(scrollToTop, 100);
+
+    // Third timeout - final check
+    const timeout3 = setTimeout(() => {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }, 200);
+
     return () => {
-      const timeouts = setTimeout(() => {}, 0);
-      clearTimeout(timeouts);
+      clearTimeout(timeout1);
+      clearTimeout(timeout2);
+      clearTimeout(timeout3);
     };
   }, [pathname]);
 

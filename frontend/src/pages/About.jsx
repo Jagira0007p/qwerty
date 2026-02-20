@@ -358,13 +358,13 @@ const About = () => {
               <span className="gradient-text block mt-2 relative">
                 Excellence Since 2022
                 <motion.span
-                  className="absolute -top-4 -right-12 text-4xl"
+                  className="absolute -top-4 -right-12 text-4xl text-[#F5F5F5]"
                   animate={{
-                    rotate: [0, 20, -20, 0],
-                    scale: [1, 1.3, 1],
+                    rotate: [0, 10, -10, 0],
+                    scale: [1, 1.2, 1],
                   }}
                   transition={{
-                    duration: 3,
+                    duration: 2,
                     repeat: Infinity,
                     ease: "easeInOut",
                   }}
@@ -740,7 +740,7 @@ const About = () => {
                       <span className="text-text-secondary">{value.stats}</span>
                     </motion.div>
 
-                    {/* Decorative Corner */}
+                    {/* Decorative Corner
                     <motion.div
                       className="absolute bottom-0 right-0 w-16 h-16 opacity-0 group-hover:opacity-100 transition-opacity"
                       animate={{
@@ -753,7 +753,7 @@ const About = () => {
                       }}
                     >
                       <div className="absolute bottom-0 right-0 w-8 h-8 border-b border-r border-[#404040]" />
-                    </motion.div>
+                    </motion.div> */}
                   </div>
                 </motion.div>
               );

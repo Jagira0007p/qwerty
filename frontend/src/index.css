@@ -87,7 +87,7 @@ html.lenis {
   transform: translate(-50%, -50%);
 }
 
-/* Gradient Text */
+/* Gradient Text - Fixed */
 .gradient-text {
   @apply bg-gradient-to-r from-[#F5F5F5] via-[#CCCCCC] to-[#999999] bg-clip-text text-transparent;
   background-size: 200% auto;
@@ -126,7 +126,7 @@ html.lenis {
   @apply scale-105;
 }
 
-/* Typography */
+/* Typography - Consolidated and Fixed */
 .display-large {
   @apply text-7xl md:text-9xl font-display font-bold tracking-[-0.02em] leading-none;
 }
@@ -202,7 +202,6 @@ html.lenis {
     opacity 0.6s,
     transform 0.6s;
 }
-/* Add to your existing index.css */
 
 /* Mobile navbar fixes */
 @media (max-width: 768px) {
@@ -210,6 +209,20 @@ html.lenis {
     backdrop-filter: blur(12px) !important;
     -webkit-backdrop-filter: blur(12px) !important;
     background-color: rgba(10, 10, 10, 0.95) !important;
+  }
+
+  /* Fix for mobile scroll to top */
+  html,
+  body {
+    overflow-x: hidden;
+    position: relative;
+    height: 100%;
+  }
+
+  #root {
+    overflow-x: hidden;
+    position: relative;
+    min-height: 100%;
   }
 }
 
@@ -233,6 +246,23 @@ html.lenis {
   background: #f5f5f5;
   transform-origin: left;
 }
-.display-medium {
+
+/* Remove duplicate display-medium */
+/* .display-medium {
   @apply text-5xl md:text-7xl font-display font-bold tracking-tight leading-tight;
+} */ /* This was the duplicate - removed */
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient {
+  animation: gradient 6s ease infinite;
 }

@@ -298,7 +298,7 @@ const Services = () => {
             <span className="gradient-text relative">
               Services
               <motion.span
-                className="absolute -top-4 -right-12 text-4xl"
+                className="absolute -top-4 -right-12 text-4xl text-[#F5F5F5]"
                 animate={{
                   rotate: [0, 20, -20, 0],
                   scale: [1, 1.3, 1],

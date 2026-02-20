@@ -8,6 +8,7 @@ import { AnimatePresence } from "framer-motion";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import CustomCursor from "./components/CustomCursor";
+import ScrollToTop from "./components/ScrollToTop";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Services from "./pages/Services";
@@ -18,6 +19,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 const Layout = () => {
   return (
     <div className="min-h-screen flex flex-col">
+      <ScrollToTop />
       <CustomCursor />
       <Navbar />
       <ScrollRestoration />

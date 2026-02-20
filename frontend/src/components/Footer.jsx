@@ -5,7 +5,7 @@ const Footer = () => {
         <div className="grid md:grid-cols-4 gap-12">
           <div className="space-y-4">
             <h3 className="text-xl font-display font-bold tracking-tight">
-              QwertyInfosys
+              Qwerty Infosys
             </h3>
             <p className="text-text-tertiary text-sm leading-relaxed">
               Transforming ideas into innovative technology solutions with
