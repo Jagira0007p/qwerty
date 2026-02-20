@@ -128,7 +128,7 @@ const Home = () => {
       icon: <FiVideo className="w-6 h-6" />,
       title: "Video Editing",
       description:
-        "Professional video editing and post-production services for stunning visual content",
+        "Professional video editing and post-production services for stunning visual",
       color: "from-orange-500/20 to-red-500/20",
       stats: "500+ Videos",
     },
@@ -149,7 +149,8 @@ const Home = () => {
     {
       icon: <HiOutlineLightBulb className="w-6 h-6" />,
       title: "UI/UX Design",
-      description: "Beautiful, intuitive interfaces users love",
+      description:
+        "Beautiful, intuitive interfaces users love to interact with",
       color: "from-pink-500/20 to-rose-500/20",
       stats: "45+ Designs",
     },

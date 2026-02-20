@@ -1,5 +1,12 @@
 import { useState, useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import {
+  motion,
+  useInView,
+  useScroll,
+  useTransform,
+  useSpring,
+  useAnimation,
+} from "framer-motion";
 import axios from "axios";
 import {
   FiMapPin,
@@ -28,6 +35,19 @@ const Contact = () => {
   const heroRef = useRef(null);
   const formRef = useRef(null);
   const isFormInView = useInView(formRef, { once: true, amount: 0.3 });
+  const controls = useAnimation();
+
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], [0, -200]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.9]);
+
+  const smoothY = useSpring(y, { damping: 20, stiffness: 100 });
+  const smoothScale = useSpring(scale, { damping: 20, stiffness: 100 });
 
   const handleChange = (e) => {
     setFormData({
@@ -90,33 +110,16 @@ const Contact = () => {
         <motion.svg
           className="absolute top-20 right-20 w-96 h-96 opacity-20"
           viewBox="0 0 200 200"
-          animate={{
-            rotate: [0, 360],
-            scale: [1, 1.2, 1],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "linear",
-          }}
+          animate={controls}
         >
           <motion.path
             d="M100 20 L120 60 L160 70 L130 100 L140 140 L100 120 L60 140 L70 100 L40 70 L80 60 Z"
             fill="none"
             stroke="url(#gradient)"
             strokeWidth="2"
-            animate={{
-              d: [
-                "M100 20 L120 60 L160 70 L130 100 L140 140 L100 120 L60 140 L70 100 L40 70 L80 60 Z",
-                "M100 30 L130 50 L170 80 L140 110 L150 150 L100 130 L50 150 L60 110 L30 80 L70 50 Z",
-                "M100 20 L120 60 L160 70 L130 100 L140 140 L100 120 L60 140 L70 100 L40 70 L80 60 Z",
-              ],
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
+            initial={{ pathLength: 0.5 }}
+            animate={{ pathLength: [0.5, 1, 0.5] }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
           />
           <defs>
             <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -128,7 +131,7 @@ const Contact = () => {
         </motion.svg>
 
         {/* Floating Particles */}
-        {[...Array(30)].map((_, i) => (
+        {[...Array(20)].map((_, i) => (
           <motion.div
             key={i}
             className="absolute w-1 h-1 bg-text-tertiary/20 rounded-full"
@@ -137,11 +140,11 @@ const Contact = () => {
               y: Math.random() * window.innerHeight,
             }}
             animate={{
-              y: [null, -50, 50, -50],
-              x: [null, 50, -50, 50],
+              y: [null, -30, 30, -30],
+              x: [null, 30, -30, 30],
             }}
             transition={{
-              duration: Math.random() * 15 + 15,
+              duration: Math.random() * 10 + 10,
               repeat: Infinity,
               ease: "linear",
             }}
@@ -152,19 +155,19 @@ const Contact = () => {
       {/* Hero Section */}
       <section
         ref={heroRef}
-        className="relative min-h-[40vh] flex items-center px-4 overflow-hidden"
+        className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden"
       >
         {/* Dynamic Gradient Background */}
-        <motion.div className="absolute inset-0">
+        <motion.div className="absolute inset-0" style={{ y: smoothY }}>
           <motion.div
             className="absolute top-40 left-20 w-96 h-96 bg-gradient-to-r from-[#222] to-[#333] rounded-full filter blur-3xl"
             animate={{
-              scale: [1, 1.3, 1],
-              x: [0, 70, 0],
-              y: [0, -40, 0],
+              scale: [1, 1.2, 1],
+              x: [0, 50, 0],
+              y: [0, -30, 0],
             }}
             transition={{
-              duration: 18,
+              duration: 15,
               repeat: Infinity,
               ease: "linear",
             }}
@@ -172,99 +175,159 @@ const Contact = () => {
           <motion.div
             className="absolute bottom-40 right-20 w-96 h-96 bg-gradient-to-l from-[#222] to-[#333] rounded-full filter blur-3xl"
             animate={{
-              scale: [1, 1.4, 1],
-              x: [0, -70, 0],
-              y: [0, 40, 0],
+              scale: [1, 1.3, 1],
+              x: [0, -50, 0],
+              y: [0, 30, 0],
             }}
             transition={{
-              duration: 20,
+              duration: 18,
               repeat: Infinity,
               ease: "linear",
             }}
           />
         </motion.div>
 
+        {/* 3D Cube */}
+        <motion.div
+          className="absolute top-1/4 right-1/4 w-32 h-32"
+          animate={{
+            rotateX: [0, 360],
+            rotateY: [0, 360],
+            rotateZ: [0, 360],
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+          style={{ perspective: 1000 }}
+        >
+          <div
+            className="relative w-full h-full"
+            style={{ transformStyle: "preserve-3d" }}
+          >
+            {[...Array(6)].map((_, i) => (
+              <div
+                key={i}
+                className="absolute inset-0 border border-[#333] bg-[#111]/50 backdrop-blur-sm"
+                style={{
+                  transform: `rotate${i < 2 ? "Y" : "X"}(${i * 90}deg) translateZ(64px)`,
+                }}
+              />
+            ))}
+          </div>
+        </motion.div>
+
         {/* Floating Elements */}
         <motion.div
           className="absolute top-1/3 left-1/4"
           animate={{
-            y: [0, -30, 0],
-            rotate: [0, 15, -15, 0],
+            y: [0, -20, 0],
+            rotate: [0, 10, -10, 0],
           }}
           transition={{
-            duration: 8,
+            duration: 6,
             repeat: Infinity,
             ease: "easeInOut",
           }}
         >
-          <HiOutlineCube className="w-20 h-20 text-text-tertiary/20" />
+          <HiOutlineCube className="w-16 h-16 text-text-tertiary/20" />
         </motion.div>
 
         <motion.div
           className="absolute bottom-1/3 right-1/4"
           animate={{
-            y: [0, 30, 0],
-            rotate: [0, -15, 15, 0],
+            y: [0, 20, 0],
+            rotate: [0, -10, 10, 0],
           }}
           transition={{
-            duration: 9,
+            duration: 7,
             repeat: Infinity,
             ease: "easeInOut",
           }}
         >
-          <BsGrid3X3 className="w-24 h-24 text-text-tertiary/20" />
+          <BsGrid3X3 className="w-20 h-20 text-text-tertiary/20" />
         </motion.div>
 
         <div className="max-w-7xl mx-auto relative z-10 text-center">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="inline-flex items-center gap-2 px-4 py-2 border border-[#333] rounded-full bg-[#111]/50 backdrop-blur-sm mb-8"
-            whileHover={{ scale: 1.05, borderColor: "#666" }}
+            style={{ y: smoothY, opacity, scale: smoothScale }}
+            className="w-full"
           >
-            <HiOutlineSparkles className="w-4 h-4 text-text-secondary" />
-            <span className="text-text-secondary text-sm tracking-wider">
-              CONTACT US
-            </span>
-          </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="inline-flex items-center gap-2 px-4 py-2 border border-[#333] rounded-full bg-[#111]/50 backdrop-blur-sm mb-8"
+              whileHover={{ scale: 1.05, borderColor: "#666" }}
+            >
+              <HiOutlineSparkles className="w-4 h-4 text-text-secondary" />
+              <span className="text-text-secondary text-sm tracking-wider">
+                CONTACT US
+              </span>
+            </motion.div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="display-medium mb-6"
-          >
-            Get In{" "}
-            <span className="gradient-text relative">
-              Touch
-              <motion.span
-                className="absolute -top-4 -right-12 text-4xl text-[#F5F5F5]"
-                animate={{
-                  rotate: [0, 10, -10, 0],
-                  scale: [1, 1.2, 1],
-                }}
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-5xl md:text-7xl font-display font-bold tracking-tight leading-tight mb-6"
+            >
+              Get In{" "}
+              <span className="gradient-text relative">
+                Touch
+                <motion.span
+                  className="absolute -top-4 -right-12 text-4xl text-[#F5F5F5]"
+                  animate={{
+                    rotate: [0, 10, -10, 0],
+                    scale: [1, 1.2, 1],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                >
+                  ✦
+                </motion.span>
+              </span>
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="text-lg md:text-xl text-text-secondary max-w-2xl mx-auto"
+            >
+              Have questions? We'd love to hear from you. Send us a message and
+              we'll respond as soon as possible.
+            </motion.p>
+          </motion.div>
+        </div>
+
+        {/* Scroll Indicator */}
+        <motion.div
+          className="absolute bottom-10 left-1/2 transform -translate-x-1/2 cursor-pointer"
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          onClick={() =>
+            window.scrollTo({ top: window.innerHeight, behavior: "smooth" })
+          }
+        >
+          <div className="relative">
+            <div className="w-6 h-10 border border-[#333] rounded-full flex justify-center">
+              <motion.div
+                className="w-1 h-2 bg-text-tertiary rounded-full mt-2"
+                animate={{ y: [0, 4, 0] }}
                 transition={{
-                  duration: 2,
+                  duration: 1.5,
                   repeat: Infinity,
                   ease: "easeInOut",
                 }}
-              >
-                ✦
-              </motion.span>
-            </span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="body-large text-text-secondary max-w-2xl mx-auto"
-          >
-            Have questions? We'd love to hear from you. Send us a message and
-            we'll respond as soon as possible.
-          </motion.p>
-        </div>
+              />
+            </div>
+          </div>
+        </motion.div>
       </section>
 
       {/* Contact Section */}
@@ -296,8 +359,8 @@ const Contact = () => {
                       <div className="bg-[#111] p-6 rounded-xl border border-[#222] hover:border-[#333] transition-all duration-300 overflow-hidden">
                         {/* Background Gradient */}
                         <motion.div
-                          // className={`absolute inset-0 bg-gradient-to-br ${info.color} opacity-0`}
-                          whileHover={{ opacity: 1 }}
+                          className={`absolute inset-0 bg-gradient-to-br ${info.color}`}
+                          whileHover={{ opacity: 0.2 }}
                           transition={{ duration: 0.3 }}
                         />
 

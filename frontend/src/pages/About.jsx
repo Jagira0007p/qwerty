@@ -1,5 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useSpring,
+  useAnimation,
+} from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Player } from "@lottiefiles/react-lottie-player";
@@ -29,7 +35,7 @@ const About = () => {
   const timelineRef = useRef([]);
   const missionRef = useRef(null);
   const heroRef = useRef(null);
-  const controlsRef = useRef(null);
+  const controls = useAnimation(); // Fixed: Added controls
 
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -165,7 +171,6 @@ const About = () => {
     { name: "Gautam Chauhan", role: "Founder & CEO", years: "5+ years" },
     { name: "Prince Vadadoriya", role: "Web Developer", years: "2+ years" },
     { name: "Rohan   Dabhi", role: "App Developer", years: "3+ years" },
-    // { name: "Emily Davis", role: "Project Manager", years: "5+ years" },
   ];
 
   return (
@@ -176,35 +181,18 @@ const About = () => {
 
         {/* Animated Morphing Shapes */}
         <motion.svg
-          className="absolute top-20 left-20 w-96 h-96 opacity-20"
+          className="absolute top-20 right-20 w-96 h-96 opacity-20"
           viewBox="0 0 200 200"
-          animate={{
-            rotate: [0, 360],
-            scale: [1, 1.2, 1],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "linear",
-          }}
+          animate={controls}
         >
           <motion.path
             d="M100 20 L120 60 L160 70 L130 100 L140 140 L100 120 L60 140 L70 100 L40 70 L80 60 Z"
             fill="none"
             stroke="url(#gradient)"
             strokeWidth="2"
-            animate={{
-              d: [
-                "M100 20 L120 60 L160 70 L130 100 L140 140 L100 120 L60 140 L70 100 L40 70 L80 60 Z",
-                "M100 30 L130 50 L170 80 L140 110 L150 150 L100 130 L50 150 L60 110 L30 80 L70 50 Z",
-                "M100 20 L120 60 L160 70 L130 100 L140 140 L100 120 L60 140 L70 100 L40 70 L80 60 Z",
-              ],
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
+            initial={{ pathLength: 0.5 }}
+            animate={{ pathLength: [0.5, 1, 0.5] }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
           />
           <defs>
             <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -216,7 +204,7 @@ const About = () => {
         </motion.svg>
 
         {/* Floating Particles */}
-        {[...Array(30)].map((_, i) => (
+        {[...Array(20)].map((_, i) => (
           <motion.div
             key={i}
             className="absolute w-1 h-1 bg-text-tertiary/20 rounded-full"
@@ -225,11 +213,11 @@ const About = () => {
               y: Math.random() * window.innerHeight,
             }}
             animate={{
-              y: [null, -50, 50, -50],
-              x: [null, 50, -50, 50],
+              y: [null, -30, 30, -30],
+              x: [null, 30, -30, 30],
             }}
             transition={{
-              duration: Math.random() * 15 + 15,
+              duration: Math.random() * 10 + 10,
               repeat: Infinity,
               ease: "linear",
             }}
@@ -240,19 +228,19 @@ const About = () => {
       {/* Hero Section */}
       <section
         ref={heroRef}
-        className="relative min-h-[80vh] flex items-center px-4 overflow-hidden"
+        className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden"
       >
         {/* Dynamic Gradient Background */}
         <motion.div className="absolute inset-0" style={{ y: smoothY }}>
           <motion.div
             className="absolute top-40 left-20 w-96 h-96 bg-gradient-to-r from-[#222] to-[#333] rounded-full filter blur-3xl"
             animate={{
-              scale: [1, 1.3, 1],
-              x: [0, 70, 0],
-              y: [0, -40, 0],
+              scale: [1, 1.2, 1],
+              x: [0, 50, 0],
+              y: [0, -30, 0],
             }}
             transition={{
-              duration: 18,
+              duration: 15,
               repeat: Infinity,
               ease: "linear",
             }}
@@ -260,12 +248,12 @@ const About = () => {
           <motion.div
             className="absolute bottom-40 right-20 w-96 h-96 bg-gradient-to-l from-[#222] to-[#333] rounded-full filter blur-3xl"
             animate={{
-              scale: [1, 1.4, 1],
-              x: [0, -70, 0],
-              y: [0, 40, 0],
+              scale: [1, 1.3, 1],
+              x: [0, -50, 0],
+              y: [0, 30, 0],
             }}
             transition={{
-              duration: 20,
+              duration: 18,
               repeat: Infinity,
               ease: "linear",
             }}
@@ -274,13 +262,14 @@ const About = () => {
 
         {/* 3D Cube */}
         <motion.div
-          className="absolute top-1/3 right-1/4 w-32 h-32"
+          className="absolute top-1/4 right-1/4 w-32 h-32"
           animate={{
             rotateX: [0, 360],
             rotateY: [0, 360],
+            rotateZ: [0, 360],
           }}
           transition={{
-            duration: 25,
+            duration: 20,
             repeat: Infinity,
             ease: "linear",
           }}
@@ -293,7 +282,7 @@ const About = () => {
             {[...Array(6)].map((_, i) => (
               <div
                 key={i}
-                className="absolute inset-0 border border-[#333] bg-[#111]/30 backdrop-blur-sm"
+                className="absolute inset-0 border border-[#333] bg-[#111]/50 backdrop-blur-sm"
                 style={{
                   transform: `rotate${i < 2 ? "Y" : "X"}(${i * 90}deg) translateZ(64px)`,
                 }}
@@ -304,22 +293,37 @@ const About = () => {
 
         {/* Floating Elements */}
         <motion.div
-          className="absolute bottom-1/3 left-1/4"
+          className="absolute top-1/3 left-1/4"
           animate={{
-            y: [0, -30, 0],
-            rotate: [0, 15, -15, 0],
+            y: [0, -20, 0],
+            rotate: [0, 10, -10, 0],
           }}
           transition={{
-            duration: 8,
+            duration: 6,
             repeat: Infinity,
             ease: "easeInOut",
           }}
         >
-          <HiOutlineCube className="w-20 h-20 text-text-tertiary/20" />
+          <HiOutlineCube className="w-16 h-16 text-text-tertiary/20" />
         </motion.div>
 
         <motion.div
-          className="absolute top-1/3 left-1/3"
+          className="absolute bottom-1/3 right-1/4"
+          animate={{
+            y: [0, 20, 0],
+            rotate: [0, -10, 10, 0],
+          }}
+          transition={{
+            duration: 7,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        >
+          <BsGrid3X3 className="w-20 h-20 text-text-tertiary/20" />
+        </motion.div>
+
+        <motion.div
+          className="absolute top-1/3 left-1/3 hidden md:block"
           animate={{
             y: [0, 30, 0],
             rotate: [0, -15, 15, 0],
@@ -360,11 +364,11 @@ const About = () => {
                 <motion.span
                   className="absolute -top-4 -right-12 text-4xl text-[#F5F5F5]"
                   animate={{
-                    rotate: [0, 10, -10, 0],
-                    scale: [1, 1.2, 1],
+                    rotate: [0, 20, -20, 0],
+                    scale: [1, 1.3, 1],
                   }}
                   transition={{
-                    duration: 2,
+                    duration: 3,
                     repeat: Infinity,
                     ease: "easeInOut",
                   }}
@@ -583,8 +587,10 @@ const About = () => {
                       >
                         {/* Animated Background Gradient */}
                         <motion.div
-                          // className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-0`}
-                          animate={{ opacity: hoveredIndex === index ? 1 : 0 }}
+                          className={`absolute inset-0 bg-gradient-to-br ${item.color}`}
+                          animate={{
+                            opacity: hoveredIndex === index ? 0.2 : 0,
+                          }}
                           transition={{ duration: 0.3 }}
                         />
 
@@ -703,7 +709,7 @@ const About = () => {
                   <div className="bg-[#111] p-8 rounded-2xl border border-[#222] hover:border-[#333] transition-all duration-300 relative overflow-hidden">
                     {/* Background Gradient */}
                     <motion.div
-                      className="absolute inset-0 bg-gradient-to-br from-[#333]/20 to-[#222]/20 opacity-0"
+                      className="absolute inset-0 bg-gradient-to-br from-[#333]/20 to-[#222]/20"
                       animate={{
                         opacity: hoveredIndex === `value-${index}` ? 1 : 0,
                       }}
@@ -739,21 +745,6 @@ const About = () => {
                     >
                       <span className="text-text-secondary">{value.stats}</span>
                     </motion.div>
-
-                    {/* Decorative Corner
-                    <motion.div
-                      className="absolute bottom-0 right-0 w-16 h-16 opacity-0 group-hover:opacity-100 transition-opacity"
-                      animate={{
-                        rotate: [0, 90, 180],
-                      }}
-                      transition={{
-                        duration: 0.6,
-                        repeat: Infinity,
-                        ease: "linear",
-                      }}
-                    >
-                      <div className="absolute bottom-0 right-0 w-8 h-8 border-b border-r border-[#404040]" />
-                    </motion.div> */}
                   </div>
                 </motion.div>
               );

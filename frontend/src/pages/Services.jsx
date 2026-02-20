@@ -1,5 +1,11 @@
 import { useState, useRef } from "react";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useSpring,
+  useAnimation,
+} from "framer-motion";
 import AnimatedCard from "../components/AnimatedCard";
 import {
   FiArrowRight,
@@ -16,6 +22,7 @@ import { BsGrid3X3, BsGraphUp, BsRocket } from "react-icons/bs";
 const Services = () => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const heroRef = useRef(null);
+  const controls = useAnimation();
 
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -24,8 +31,10 @@ const Services = () => {
 
   const y = useTransform(scrollYProgress, [0, 1], [0, -200]);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.9]);
 
   const smoothY = useSpring(y, { damping: 20, stiffness: 100 });
+  const smoothScale = useSpring(scale, { damping: 20, stiffness: 100 });
 
   const services = [
     {
@@ -33,12 +42,7 @@ const Services = () => {
       title: "Web Development",
       description:
         "Modern, responsive websites and web applications built with cutting-edge technology.",
-      features: [
-        "Custom Applications",
-        "E-commerce",
-        "PWAs",
-        "API Development",
-      ],
+      features: ["Custom Applications", "E-commerce", "API Development"],
       stats: "50+ Projects",
       color: "from-blue-500/20 to-purple-500/20",
     },
@@ -66,10 +70,10 @@ const Services = () => {
       color: "from-orange-500/20 to-red-500/20",
     },
     {
-      icon: FiVideo, // Changed from FiCloud to FiVideo
+      icon: FiVideo,
       title: "Video Editing",
       description:
-        "Professional video editing and post-production services for stunning visual content, including color grading, effects, and motion graphics.",
+        "Professional video editing and post-production services for stunning visual .",
       features: [
         "Color Grading",
         "Motion Graphics",
@@ -145,35 +149,18 @@ const Services = () => {
 
         {/* Animated Morphing Shapes */}
         <motion.svg
-          className="absolute top-20 left-20 w-96 h-96 opacity-20"
+          className="absolute top-20 right-20 w-96 h-96 opacity-20"
           viewBox="0 0 200 200"
-          animate={{
-            rotate: [0, 360],
-            scale: [1, 1.2, 1],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "linear",
-          }}
+          animate={controls}
         >
           <motion.path
             d="M100 20 L120 60 L160 70 L130 100 L140 140 L100 120 L60 140 L70 100 L40 70 L80 60 Z"
             fill="none"
             stroke="url(#gradient)"
             strokeWidth="2"
-            animate={{
-              d: [
-                "M100 20 L120 60 L160 70 L130 100 L140 140 L100 120 L60 140 L70 100 L40 70 L80 60 Z",
-                "M100 30 L130 50 L170 80 L140 110 L150 150 L100 130 L50 150 L60 110 L30 80 L70 50 Z",
-                "M100 20 L120 60 L160 70 L130 100 L140 140 L100 120 L60 140 L70 100 L40 70 L80 60 Z",
-              ],
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
+            initial={{ pathLength: 0.5 }}
+            animate={{ pathLength: [0.5, 1, 0.5] }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
           />
           <defs>
             <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -185,7 +172,7 @@ const Services = () => {
         </motion.svg>
 
         {/* Floating Particles */}
-        {[...Array(30)].map((_, i) => (
+        {[...Array(20)].map((_, i) => (
           <motion.div
             key={i}
             className="absolute w-1 h-1 bg-text-tertiary/20 rounded-full"
@@ -194,11 +181,11 @@ const Services = () => {
               y: Math.random() * window.innerHeight,
             }}
             animate={{
-              y: [null, -50, 50, -50],
-              x: [null, 50, -50, 50],
+              y: [null, -30, 30, -30],
+              x: [null, 30, -30, 30],
             }}
             transition={{
-              duration: Math.random() * 15 + 15,
+              duration: Math.random() * 10 + 10,
               repeat: Infinity,
               ease: "linear",
             }}
@@ -209,19 +196,19 @@ const Services = () => {
       {/* Hero Section */}
       <section
         ref={heroRef}
-        className="relative min-h-[60vh] flex items-center px-4 overflow-hidden"
+        className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden"
       >
         {/* Dynamic Gradient Background */}
         <motion.div className="absolute inset-0" style={{ y: smoothY }}>
           <motion.div
             className="absolute top-40 left-20 w-96 h-96 bg-gradient-to-r from-[#222] to-[#333] rounded-full filter blur-3xl"
             animate={{
-              scale: [1, 1.3, 1],
-              x: [0, 70, 0],
-              y: [0, -40, 0],
+              scale: [1, 1.2, 1],
+              x: [0, 50, 0],
+              y: [0, -30, 0],
             }}
             transition={{
-              duration: 18,
+              duration: 15,
               repeat: Infinity,
               ease: "linear",
             }}
@@ -229,100 +216,133 @@ const Services = () => {
           <motion.div
             className="absolute bottom-40 right-20 w-96 h-96 bg-gradient-to-l from-[#222] to-[#333] rounded-full filter blur-3xl"
             animate={{
-              scale: [1, 1.4, 1],
-              x: [0, -70, 0],
-              y: [0, 40, 0],
+              scale: [1, 1.3, 1],
+              x: [0, -50, 0],
+              y: [0, 30, 0],
             }}
             transition={{
-              duration: 20,
+              duration: 18,
               repeat: Infinity,
               ease: "linear",
             }}
           />
         </motion.div>
 
-        {/* Floating Elements */}
+        {/* 3D Cube */}
         <motion.div
-          className="absolute top-1/3 right-1/4"
+          className="absolute top-1/4 right-1/4 w-32 h-32"
           animate={{
-            y: [0, -30, 0],
-            rotate: [0, 15, -15, 0],
+            rotateX: [0, 360],
+            rotateY: [0, 360],
+            rotateZ: [0, 360],
           }}
           transition={{
-            duration: 8,
+            duration: 20,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+          style={{ perspective: 1000 }}
+        >
+          <div
+            className="relative w-full h-full"
+            style={{ transformStyle: "preserve-3d" }}
+          >
+            {[...Array(6)].map((_, i) => (
+              <div
+                key={i}
+                className="absolute inset-0 border border-[#333] bg-[#111]/50 backdrop-blur-sm"
+                style={{
+                  transform: `rotate${i < 2 ? "Y" : "X"}(${i * 90}deg) translateZ(64px)`,
+                }}
+              />
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Floating Elements */}
+        <motion.div
+          className="absolute top-1/3 left-1/4"
+          animate={{
+            y: [0, -20, 0],
+            rotate: [0, 10, -10, 0],
+          }}
+          transition={{
+            duration: 6,
             repeat: Infinity,
             ease: "easeInOut",
           }}
         >
-          <HiOutlineCube className="w-20 h-20 text-text-tertiary/20" />
+          <HiOutlineCube className="w-16 h-16 text-text-tertiary/20" />
         </motion.div>
 
         <motion.div
-          className="absolute bottom-1/3 left-1/4"
+          className="absolute bottom-1/3 right-1/4"
           animate={{
-            y: [0, 30, 0],
-            rotate: [0, -15, 15, 0],
+            y: [0, 20, 0],
+            rotate: [0, -10, 10, 0],
           }}
           transition={{
-            duration: 9,
+            duration: 7,
             repeat: Infinity,
             ease: "easeInOut",
           }}
         >
-          <BsGrid3X3 className="w-24 h-24 text-text-tertiary/20" />
+          <BsGrid3X3 className="w-20 h-20 text-text-tertiary/20" />
         </motion.div>
 
         <div className="max-w-7xl mx-auto relative z-10 text-center">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            style={{ y: smoothY, opacity }}
-            className="inline-flex items-center gap-2 px-4 py-2 border border-[#333] rounded-full bg-[#111]/50 backdrop-blur-sm mb-8"
-            whileHover={{ scale: 1.05, borderColor: "#666" }}
+            style={{ y: smoothY, opacity, scale: smoothScale }}
+            className="w-full"
           >
-            <HiOutlineSparkles className="w-4 h-4 text-text-secondary" />
-            <span className="text-text-secondary text-sm tracking-wider">
-              OUR SERVICES
-            </span>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="inline-flex items-center gap-2 px-4 py-2 border border-[#333] rounded-full bg-[#111]/50 backdrop-blur-sm mb-8"
+              whileHover={{ scale: 1.05, borderColor: "#666" }}
+            >
+              <HiOutlineSparkles className="w-4 h-4 text-text-secondary" />
+              <span className="text-text-secondary text-sm tracking-wider">
+                OUR SERVICES
+              </span>
+            </motion.div>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-5xl md:text-7xl font-display font-bold tracking-tight leading-tight mb-6"
+            >
+              Our{" "}
+              <span className="gradient-text relative">
+                Services
+                <motion.span
+                  className="absolute -top-4 -right-12 text-4xl text-[#F5F5F5]"
+                  animate={{
+                    rotate: [0, 20, -20, 0],
+                    scale: [1, 1.3, 1],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                >
+                  ✦
+                </motion.span>
+              </span>
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="text-lg md:text-xl text-text-secondary max-w-2xl mx-auto"
+            >
+              Comprehensive technology solutions tailored to your business needs
+            </motion.p>
           </motion.div>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            style={{ y: smoothY, opacity }}
-            className="display-medium mb-6"
-          >
-            Our{" "}
-            <span className="gradient-text relative">
-              Services
-              <motion.span
-                className="absolute -top-4 -right-12 text-4xl text-[#F5F5F5]"
-                animate={{
-                  rotate: [0, 20, -20, 0],
-                  scale: [1, 1.3, 1],
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-              >
-                ✦
-              </motion.span>
-            </span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            style={{ y: smoothY, opacity }}
-            className="body-large text-text-secondary max-w-2xl mx-auto"
-          >
-            Comprehensive technology solutions tailored to your business needs
-          </motion.p>
         </div>
 
         {/* Scroll Indicator */}
@@ -373,8 +393,8 @@ const Services = () => {
                     >
                       {/* Background Gradient */}
                       <motion.div
-                        // className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-0`}
-                        animate={{ opacity: hoveredIndex === index ? 1 : 0 }}
+                        // className={`absolute inset-0 bg-gradient-to-br ${service.color}`}
+                        animate={{ opacity: hoveredIndex === index ? 0.2 : 0 }}
                         transition={{ duration: 0.3 }}
                       />
 
@@ -458,7 +478,7 @@ const Services = () => {
             <span className="text-text-tertiary text-sm tracking-widest inline-block px-4 py-2 border border-[#333] rounded-full">
               OUR PROCESS
             </span>
-            <h2 className="heading-large mt-6">
+            <h2 className="text-4xl md:text-5xl font-display font-semibold tracking-tight mt-6">
               How We <span className="gradient-text">Work</span>
             </h2>
           </motion.div>
@@ -533,7 +553,7 @@ const Services = () => {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="heading-large">
+            <h2 className="text-4xl md:text-5xl font-display font-semibold tracking-tight">
               Technologies We <span className="gradient-text">Use</span>
             </h2>
           </motion.div>
@@ -580,12 +600,28 @@ const Services = () => {
             />
 
             <div className="relative bg-[#111] p-12 rounded-2xl border border-[#222]">
-              <h2 className="heading-large mb-6">
+              <h2 className="text-4xl md:text-5xl font-display font-semibold tracking-tight mb-6">
                 Ready to Start Your
-                <span className="gradient-text block mt-2">Project?</span>
+                <span className="gradient-text block mt-2 relative">
+                  Project?
+                  <motion.span
+                    className="absolute -top-4 -right-12 text-4xl text-[#F5F5F5]"
+                    animate={{
+                      rotate: [0, 10, -10, 0],
+                      scale: [1, 1.2, 1],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
+                  >
+                    ✦
+                  </motion.span>
+                </span>
               </h2>
 
-              <p className="body-large mb-10 text-text-secondary">
+              <p className="text-lg md:text-xl text-text-secondary mb-10">
                 Let's turn your ideas into reality with our innovative solutions
               </p>
 
