@@ -359,7 +359,7 @@ const Contact = () => {
                       <div className="bg-[#111] p-6 rounded-xl border border-[#222] hover:border-[#333] transition-all duration-300 overflow-hidden">
                         {/* Background Gradient */}
                         <motion.div
-                          className={`absolute inset-0 bg-gradient-to-br ${info.color}`}
+                          // className={`absolute inset-0 bg-gradient-to-br ${info.color}`}
                           whileHover={{ opacity: 0.2 }}
                           transition={{ duration: 0.3 }}
                         />

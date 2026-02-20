@@ -587,7 +587,7 @@ const About = () => {
                       >
                         {/* Animated Background Gradient */}
                         <motion.div
-                          className={`absolute inset-0 bg-gradient-to-br ${item.color}`}
+                          // className={`absolute inset-0 bg-gradient-to-br ${item.color}`}
                           animate={{
                             opacity: hoveredIndex === index ? 0.2 : 0,
                           }}
